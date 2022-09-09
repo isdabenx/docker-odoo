@@ -1,6 +1,6 @@
 version: '3.9'
 services:
-  web:
+  odoo:
     container_name: ${WEB_HOSTNAME}
     build: ./config/${WEB_HOSTNAME}
     depends_on:
@@ -13,7 +13,7 @@ services:
       - PASSWORD=${POSTGRES_PASSWORD}
     tty: true
     volumes:
-      - odoo-web-data:/var/lib/odoo
+      - odoo-data:/var/lib/odoo
       - ./config/${WEB_HOSTNAME}/conf:/etc/odoo
       - ./addons/${WEB_HOSTNAME}:/mnt/extra-addons
       - ./enterprise:/mnt/enterprise-addons
@@ -58,6 +58,6 @@ services:
   #     - "9000:9000"
 
 volumes:
-  odoo-web-data:
+  odoo-data:
   odoo-db-data:
   odoo-pgadmin-data:
