@@ -74,9 +74,6 @@ done
 
 if [ -z "$CONFIG_DIR" ]; then
     syntax_error "Option -c is required."
-
-else
-    export WEB_HOSTNAME=$CONFIG_DIR
 fi
 
 if [ ! -d "config/$CONFIG_DIR" ]; then
@@ -86,6 +83,8 @@ if [ ! -d "config/$CONFIG_DIR" ]; then
     echo -e "${RESET}"
     exit 1
 fi
+
+export WEB_HOSTNAME=$CONFIG_DIR
 
 case $ACTION in
 "STATUS")

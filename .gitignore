@@ -1,4 +1,6 @@
 # ignore config folder
 config/*
-!config/sample
+!config/sample13
+!config/sample14
+!config/sample15
 addons/*

@@ -1,0 +1,12 @@
+[submodule "modules/enterprise/13.0"]
+	path = modules/enterprise/13.0
+	url = git@github.com:odoo/enterprise.git
+	branch = 13.0
+[submodule "modules/enterprise/14.0"]
+	path = modules/enterprise/14.0
+	url = git@github.com:odoo/enterprise.git
+	branch = 14.0
+[submodule "modules/enterprise/15.0"]
+	path = modules/enterprise/15.0
+	url = git@github.com:odoo/enterprise.git
+	branch = 15.0

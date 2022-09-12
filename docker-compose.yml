@@ -2,7 +2,11 @@ version: '3.9'
 services:
   odoo:
     container_name: ${WEB_HOSTNAME}
-    build: ./config/${WEB_HOSTNAME}
+    build:
+      context: ./config/${WEB_HOSTNAME}
+      args:
+        - ODOO_VERSION=${ODOO_VERSION}
+    image: isdabenx/odoo:${ODOO_VERSION}
     depends_on:
       - db
     ports:
@@ -16,12 +20,12 @@ services:
       - odoo-data:/var/lib/odoo
       - ./config/${WEB_HOSTNAME}/conf:/etc/odoo
       - ./addons/${WEB_HOSTNAME}:/mnt/extra-addons
-      - ./enterprise:/mnt/enterprise-addons
+      - ./modules/enterprise/${ODOO_VERSION}:/mnt/enterprise-addons
   db:
-    container_name: "db"
+    container_name: "db-${WEB_HOSTNAME}"
     image: postgres:${POSTGRES_VERSION}
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:5432"
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -44,20 +48,14 @@ services:
       - "db:${POSTGRES_HOSTNAME}"
     volumes:
       - odoo-pgadmin-data:/var/lib/pgadmin
-  # portainer:
-  #   image: portainer/portainer-ce:latest
-  #   container_name: portainer
-  #   restart: unless-stopped
-  #   security_opt:
-  #     - no-new-privileges:true
-  #   volumes:
-  #     - /etc/localtime:/etc/localtime:ro
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  #     - ./portainer-data:/data
-  #   ports:
-  #     - "9000:9000"
 
 volumes:
   odoo-data:
+    name: odoo-${WEB_HOSTNAME}
   odoo-db-data:
+    name: odoo-db-${WEB_HOSTNAME}
   odoo-pgadmin-data:
+
+networks:
+  default:
+    name: odoo-network-${WEB_HOSTNAME}
